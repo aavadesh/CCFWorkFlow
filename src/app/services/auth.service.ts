@@ -15,6 +15,7 @@ export class AuthService {
     createAuth0Client({
       domain: 'dev-7z2owzae.us.auth0.com',
       client_id: '4jytNlocTJIe59j6l4ZP879HJriUteJp',
+      audience: "30285",
       redirect_uri: `${window.location.origin}`
     })
   ) as Observable<Auth0Client>).pipe(
@@ -30,7 +31,7 @@ export class AuthService {
     tap(res => this.loggedIn = res)
   );
   handleRedirectCallback$ = this.auth0Client$.pipe(
-    concatMap((client: Auth0Client) => from(client.handleRedirectCallback()))
+    concatMap((client: Auth0Client) => from(client.handleRedirectCallback())),
   );
   // Create subject and public observable of user profile data
   private userProfileSubject$ = new BehaviorSubject<any>(null);
@@ -54,6 +55,12 @@ export class AuthService {
       tap(user => this.userProfileSubject$.next(user))
     );
   }
+  getToken$(options?): Observable<any> {
+    return this.auth0Client$.pipe(
+      concatMap((client: Auth0Client) => from(client.getTokenSilently(options))),
+      tap(token => localStorage.setItem('token',token))
+    );
+  }
 
   private localAuthSetup() {
     // This should only be called on app initialization
@@ -61,9 +68,9 @@ export class AuthService {
     const checkAuth$ = this.isAuthenticated$.pipe(
       concatMap((loggedIn: boolean) => {
         if (loggedIn) {
-          debugger
           // If authenticated, get user and set in app
           // NOTE: you could pass options here if needed
+          
           return this.getUser$();
         }
         // If not authenticated, return stream that emits 'false'
@@ -74,17 +81,23 @@ export class AuthService {
   }
 
   login(redirectPath: string = '/dashboard') {
+    debugger
     console.log(`${window.location.origin}`);
     this.auth0Client$.subscribe((client: Auth0Client) => {
       // Call method to log in
       client.loginWithRedirect({
         redirect_uri: `${window.location.origin}`,
         appState: { target: redirectPath }
+      }).then(token =>{
+        debugger
+        const _token= client.getTokenSilently();
+        console.log(_token)
       });
     });
   }
 
   private handleAuthCallback() {
+    debugger
     // Call when app reloads after user logs in with Auth0
     const params = window.location.search;
     if (params.includes('code=') && params.includes('state=')) {
@@ -99,6 +112,7 @@ export class AuthService {
           // Redirect callback complete; get user and login status
           return combineLatest([
             this.getUser$(),
+            this.getToken$(),
             this.isAuthenticated$
           ]);
         })
@@ -122,5 +136,10 @@ export class AuthService {
       });
     });
   }
+  getAuthorizationToken(){
+    //return 'Bearer ' + localStorage.getItem('token');
+    return `Bearer ${localStorage.getItem('token')}`
+  }
+  
 }
 
