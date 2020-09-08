@@ -12,9 +12,10 @@ import { DashboardModule } from './dashboard/dashboard.module';
 import { RegistrationModule } from './registration/registration.module';
 import { UsersModule } from './users/users.module';
 import { CompetencyframeworkModule } from './competencyframework/competencyframework.module';
-import { HttpClientModule } from '@angular/common/http';
 import { SearchPipe } from './shared/search.pipe';
-
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import {AuthInterceptor} from './services/AuthInterceptor';
+import {HttpErrorInterceptor} from './services/http-error.interceptor';
 @NgModule({
   declarations: [
     AppComponent,
@@ -34,7 +35,13 @@ import { SearchPipe } from './shared/search.pipe';
     CompetencyframeworkModule,
     HttpClientModule
   ],
-  providers: [],
+  providers: [ { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: HttpErrorInterceptor,
+      multi: true
+    }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
