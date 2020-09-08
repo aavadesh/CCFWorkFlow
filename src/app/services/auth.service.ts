@@ -81,7 +81,6 @@ export class AuthService {
   }
 
   login(redirectPath: string = '/dashboard') {
-    debugger
     console.log(`${window.location.origin}`);
     this.auth0Client$.subscribe((client: Auth0Client) => {
       // Call method to log in
@@ -89,7 +88,6 @@ export class AuthService {
         redirect_uri: `${window.location.origin}`,
         appState: { target: redirectPath }
       }).then(token =>{
-        debugger
         const _token= client.getTokenSilently();
         console.log(_token)
       });
@@ -97,7 +95,6 @@ export class AuthService {
   }
 
   private handleAuthCallback() {
-    debugger
     // Call when app reloads after user logs in with Auth0
     const params = window.location.search;
     if (params.includes('code=') && params.includes('state=')) {
