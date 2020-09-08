@@ -12,6 +12,7 @@ import { RegistrationModule } from './registration/registration.module';
 import { UsersModule } from './users/users.module';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import {AuthInterceptor} from './services/AuthInterceptor';
+import {HttpErrorInterceptor} from './services/http-error.interceptor';
 @NgModule({
   declarations: [
     AppComponent,
@@ -28,7 +29,13 @@ import {AuthInterceptor} from './services/AuthInterceptor';
     UsersModule,
     HttpClientModule
   ],
-  providers: [ { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }],
+  providers: [ { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: HttpErrorInterceptor,
+      multi: true
+    }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
