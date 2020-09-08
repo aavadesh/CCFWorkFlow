@@ -13,13 +13,9 @@ const fallbackRoute: Route = {
   data: { showHeader: false, showSidebar: false, showFooter: false }
 };
 const routes: Routes = [
-  // {
-  //   path: '',
-  //   redirectTo: '/dashboard',
-  //   pathMatch: 'full',
-  // },
   { path: 'dashboard', loadChildren: './dashboard/dashboard.module#DashboardModule',canActivate:[AuthGuard] },
   { path: 'users', loadChildren: './users/users.module#UsersModule'},
+  { path: 'competencyframework', loadChildren: './competencyframework/competencyframework.module#CompetencyframeworkModule'},
   {
     path: 'login',
     loadChildren: './login/login.module#LoginModule',
