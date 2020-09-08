@@ -10,8 +10,8 @@ import { LoginModule } from './login/login.module';
 import { DashboardModule } from './dashboard/dashboard.module';
 import { RegistrationModule } from './registration/registration.module';
 import { UsersModule } from './users/users.module';
-import { HttpClientModule } from '@angular/common/http';
-
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import {AuthInterceptor} from './services/AuthInterceptor';
 @NgModule({
   declarations: [
     AppComponent,
@@ -28,7 +28,7 @@ import { HttpClientModule } from '@angular/common/http';
     UsersModule,
     HttpClientModule
   ],
-  providers: [],
+  providers: [ { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
