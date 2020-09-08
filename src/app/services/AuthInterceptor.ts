@@ -1,4 +1,4 @@
-import { AuthService } from './auth.service';
+import { AuthService } from './auth/auth.service';
 import { Injectable } from '@angular/core';
 import { HttpInterceptor, HttpRequest, HttpHandler, HttpHeaders } from '@angular/common/http';
 
@@ -15,9 +15,7 @@ export class AuthInterceptor implements HttpInterceptor {
     // Clone the request and replace the original headers with
     // cloned headers, updated with the authorization.
     const headers = new HttpHeaders({
-      'Authorization': authToken,
-      'Content-Type': 'application/json',
-      "Access-Control-Allow-Origin" : "*"
+      
     });
     const authReq = req.clone({headers});
 

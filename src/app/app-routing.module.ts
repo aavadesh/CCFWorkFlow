@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule, Route } from '@angular/router';
-import { AuthGuard } from './services/auth.guard';
+import { AuthGuard } from './services/auth/auth.guard';
 const indexRoute: Route = {
   path: '',
   loadChildren: './login/login.module#LoginModule',

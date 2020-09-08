@@ -47,7 +47,7 @@
                     </tr>
                   </thead>
                   <tbody>
-                      <tr *ngFor="let competencyFramework of competencyFrameworkList | name:name;let i = index">
+                      <tr *ngFor="let competencyFramework of competencyFrameworkList">
                           <td>{{competencyFramework.name}}</td>
                           <td class="text-right">
                               <a class="btn btn-primary btn-sm" href="#" (click)="employeeDetails(competencyFramework.competencyFrameworkID)">

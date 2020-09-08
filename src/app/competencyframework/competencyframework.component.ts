@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { CompetencyFramework } from './class/competencyframewokr';
-import { CrudService } from '../shared/crud.service';
-import { Observable } from "rxjs";
+import { CompetencyframeworkService } from '../services/competencyframework.service'
+import { from, Observable, Subscription } from "rxjs";
 
 
 @Component({
@@ -13,9 +13,9 @@ import { Observable } from "rxjs";
 export class CompetencyframeworkComponent implements OnInit {
   
   name: string;
-  competencyFrameworkList: Observable<CompetencyFramework[]>;
+  competencyFrameworkList: CompetencyFramework[];
 
-  constructor(private CrudService: CrudService,
+  constructor(private CrudService: CompetencyframeworkService,
     private router: Router) { }
 
   ngOnInit(): void {
@@ -23,9 +23,7 @@ export class CompetencyframeworkComponent implements OnInit {
   }
 
   bindCompetencyFramework() {
-    debugger;
-    this.CrudService.getList().subscribe(res=> {
-      
+    this.CrudService.findAll().subscribe(res=> {
       debugger;
       this.competencyFrameworkList = res;
       console.log(this.competencyFrameworkList);
