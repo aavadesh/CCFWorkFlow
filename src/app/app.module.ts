@@ -16,6 +16,8 @@ import { SearchPipe } from './shared/search.pipe';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import {AuthInterceptor} from './services/AuthInterceptor';
 import {HttpErrorInterceptor} from './services/http-error.interceptor';
+import { CompetencydetailModule } from './competencyframeworddetail/competencydetail.module';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -33,6 +35,7 @@ import {HttpErrorInterceptor} from './services/http-error.interceptor';
     RegistrationModule,
     UsersModule,
     CompetencyframeworkModule,
+    CompetencydetailModule,
     HttpClientModule
   ],
   providers: [ { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },

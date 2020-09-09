@@ -50,7 +50,7 @@
                       <tr *ngFor="let competencyFramework of competencyFrameworkList">
                           <td>{{competencyFramework.name}}</td>
                           <td class="text-right">
-                              <a class="btn btn-primary btn-sm" href="#" (click)="employeeDetails(competencyFramework.competencyFrameworkID)">
+                              <a class="btn btn-primary btn-sm" [routerLink]="['/competencydetail', competencyFramework.competencyFrameworkID]">
                                   <i class="fas fa-folder">
                                   </i>
                                   Apply
