@@ -4,7 +4,7 @@ import { CommonModule } from '@angular/common';
 import { CompetencyframeworkRoutingModule } from './competencyframework-routing.module';
 import { CompetencyframeworkComponent } from './competencyframework.component';
 import { FlexLayoutModule } from '@angular/flex-layout';
-
+import { CompetencyframeworkCreateComponent } from './Create/competencyframework-create.component';
 
 @NgModule({
     imports: [
@@ -12,6 +12,6 @@ import { FlexLayoutModule } from '@angular/flex-layout';
       CompetencyframeworkRoutingModule,
       FlexLayoutModule
     ],
-    declarations: [CompetencyframeworkComponent]
+    declarations: [CompetencyframeworkComponent, CompetencyframeworkCreateComponent]
   })
   export class CompetencyframeworkModule { }

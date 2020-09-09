@@ -1,5 +1,5 @@
 
-import { NgModule } from '@angular/core';
+import { NgModule,NO_ERRORS_SCHEMA,CUSTOM_ELEMENTS_SCHEMA  } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
 import { AppComponent } from './app.component';
@@ -18,8 +18,9 @@ import {AuthInterceptor} from './services/AuthInterceptor';
 import {HttpErrorInterceptor} from './services/http-error.interceptor';
 import { CompetencydetailModule } from './competencyframeworddetail/competencydetail.module';
 
+
 @NgModule({
-  declarations: [
+  declarations: [ 
     AppComponent,
     SearchPipe
   ],
@@ -45,6 +46,10 @@ import { CompetencydetailModule } from './competencyframeworddetail/competencyde
       multi: true
     }
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  schemas: [
+    CUSTOM_ELEMENTS_SCHEMA,
+    NO_ERRORS_SCHEMA
+  ]
 })
 export class AppModule { }
