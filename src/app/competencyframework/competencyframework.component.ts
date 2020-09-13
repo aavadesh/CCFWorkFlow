@@ -24,7 +24,6 @@ export class CompetencyframeworkComponent implements OnInit {
 
   bindCompetencyFramework() {
     this.CrudService.findAll().subscribe(res=> {
-      debugger;
       this.competencyFrameworkList = res;
       console.log(this.competencyFrameworkList);
  });

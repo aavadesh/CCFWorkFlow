@@ -56,30 +56,111 @@
             </div>
 
             <div class="row mt-4">
-                <!-- <nav class="w-100">
+              <nav class="w-100">
                   <div class="nav nav-tabs" id="product-tab" role="tablist">
-                    <a class="nav-item nav-link active" id="product-desc-tab" data-toggle="tab" href="#product-desc" role="tab" aria-controls="product-desc" aria-selected="true">Solution Architecture</a>
-                    <a class="nav-item nav-link" id="product-comments-tab" data-toggle="tab" href="#product-comments" role="tab" aria-controls="product-comments" aria-selected="false">Emerging Technology Monitoring</a>
-                    <a class="nav-item nav-link" id="product-rating-tab" data-toggle="tab" href="#product-rating" role="tab" aria-controls="product-rating" aria-selected="false">Capability Development</a>
-                    <a class="nav-item nav-link" id="product-rating-tab" data-toggle="tab" href="#product-rating" role="tab" aria-controls="product-rating" aria-selected="false">Values & Leadership</a>
-                  </div>
-                </nav>
-                <div class="tab-content p-3" id="nav-tabContent">
-                  <div class="tab-pane fade active show" id="product-desc" role="tabpanel" aria-labelledby="product-desc-tab"> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi vitae condimentum erat. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Sed posuere, purus at efficitur hendrerit, augue elit lacinia arcu, a eleifend sem elit et nunc. Sed rutrum vestibulum est, sit amet cursus dolor fermentum vel. Suspendisse mi nibh, congue et ante et, commodo mattis lacus. Duis varius finibus purus sed venenatis. Vivamus varius metus quam, id dapibus velit mattis eu. Praesent et semper risus. Vestibulum erat erat, condimentum at elit at, bibendum placerat orci. Nullam gravida velit mauris, in pellentesque urna pellentesque viverra. Nullam non pellentesque justo, et ultricies neque. Praesent vel metus rutrum, tempus erat a, rutrum ante. Quisque interdum efficitur nunc vitae consectetur. Suspendisse venenatis, tortor non convallis interdum, urna mi molestie eros, vel tempor justo lacus ac justo. Fusce id enim a erat fringilla sollicitudin ultrices vel metus. </div>
-                  <div class="tab-pane fade" id="product-comments" role="tabpanel" aria-labelledby="product-comments-tab"> Vivamus rhoncus nisl sed venenatis luctus. Sed condimentum risus ut tortor feugiat laoreet. Suspendisse potenti. Donec et finibus sem, ut commodo lectus. Cras eget neque dignissim, placerat orci interdum, venenatis odio. Nulla turpis elit, consequat eu eros ac, consectetur fringilla urna. Duis gravida ex pulvinar mauris ornare, eget porttitor enim vulputate. Mauris hendrerit, massa nec aliquam cursus, ex elit euismod lorem, vehicula rhoncus nisl dui sit amet eros. Nulla turpis lorem, dignissim a sapien eget, ultrices venenatis dolor. Curabitur vel turpis at magna elementum hendrerit vel id dui. Curabitur a ex ullamcorper, ornare velit vel, tincidunt ipsum. </div>
-                  <div class="tab-pane fade" id="product-rating" role="tabpanel" aria-labelledby="product-rating-tab"> Cras ut ipsum ornare, aliquam ipsum non, posuere elit. In hac habitasse platea dictumst. Aenean elementum leo augue, id fermentum risus efficitur vel. Nulla iaculis malesuada scelerisque. Praesent vel ipsum felis. Ut molestie, purus aliquam placerat sollicitudin, mi ligula euismod neque, non bibendum nibh neque et erat. Etiam dignissim aliquam ligula, aliquet feugiat nibh rhoncus ut. Aliquam efficitur lacinia lacinia. Morbi ac molestie lectus, vitae hendrerit nisl. Nullam metus odio, malesuada in vehicula at, consectetur nec justo. Quisque suscipit odio velit, at accumsan urna vestibulum a. Proin dictum, urna ut varius consectetur, sapien justo porta lectus, at mollis nisi orci et nulla. Donec pellentesque tortor vel nisl commodo ullamcorper. Donec varius massa at semper posuere. Integer finibus orci vitae vehicula placerat. </div>
-                </div> -->
+                   
 
-                <tabset>  
-                    <tab *ngFor="let tabz of tabs"
-                    [heading]="tabz.title"
-                    [active]="tabz.active"
-                    (selectTab)="tabz.active = true"
-                    (deselect)="tabz.active = false"
-                    [disabled]="tabz.disabled"
-                    [customClass]="tabz.customClass"><input type="text">
-               </tab>
-                  </tabset>  
+
+                    <tabset>
+                      <tab heading="Solution Architecture" id="tab1" (selectTab)="onSelect($event)"> 
+                        <section class="content" style="margin: 10px;">
+
+                          <ul class="text-muted">
+                            <p>The design and communication of high-level artefacts to guide the design and development of integrated solutions that meet customer requirements. This includes the provision of guidance on the development of, and modifications to, solution components to ensure that they take account of relevant architectures, strategies, policies, standards and practices (including security)</p>
+                            </ul>
+
+                          <div class="row">
+                            <div class="col-md-6">
+                              <form [formGroup]="competencyForm" (ngSubmit)="onSubmit(competencyForm.value)">
+                                <div class="card card-primary">
+                                  <div class="card-body">
+                                    <div class="form-group">
+                                      <label for="inputName">Employee's Comment</label>
+                                      <angular-editor [(ngModel)]="EmployeeCommnet" [config]="config" id="EmployeeCommnet" name="EmployeeCommnet" formControlName="EmployeeCommnet"></angular-editor>
+                                    </div>
+                                    <div class="form-group">
+                                      <div class="row">
+                                        <label for="inputProjectLeader">Attach Proof<span class="text-muted"> (Max. 3 Documents)</span></label>
+                                      </div>
+                                      <div class="row">
+                                        <div class="btn btn-default btn-file">
+                                          <i class="fas fa-paperclip"></i> Attachment
+                                          <input type="file" formControlName="Files" #ProofDocument id="Files"
+                                          name="Files" (change)="fileProgress($event)">
+                                        </div>
+                                      </div>
+                                    </div>
+                                    <div class="card-footer bg-white" *ngIf="isUpload">
+                                      <ul class="mailbox-attachments d-flex align-items-stretch clearfix">
+                                        <li>
+                                          <span class="mailbox-attachment-icon" [ngSwitch]="fileType">
+                                            <i class="far fa-file-pdf" *ngSwitchCase="2"></i>
+                                            <i class="far fa-file-word" *ngSwitchCase="1"></i>
+                                            <i class="far fa-file-image" *ngSwitchCase="4"></i>
+                                            <i class="far fa-file-excel" *ngSwitchCase="3"></i>
+                                          </span>
+                                          <div class="mailbox-attachment-info">
+                                            <a href="#" class="mailbox-attachment-name"><i class="fas fa-paperclip"></i>   {{fileName}} </a>
+                                                <span class="mailbox-attachment-size clearfix mt-1">
+                                                  <span>{{fileSize}} KB</span>
+                                                  <a href="#" class="btn btn-default btn-sm float-right"><i class="fas fa-cloud-download-alt"></i></a>
+                                                </span>
+                                          </div>
+                                        </li>
+                                      </ul>
+                                    </div>
+                                  </div>
+                                </div>
+                                <div class="card-footer">
+                                  <div class="float-left">
+                                    <button type="submit" class="btn btn-default"><i class="fas fa-pencil-alt"></i> Draft</button>
+                                    <button type="submit" class="btn btn-success"><i class="far fa-envelope"></i> Submit</button>
+                                  <button type="reset" class="btn btn-default"><i class="fas fa-times"></i> Discard</button>
+                                </div>
+                             
+                             </div>
+                            </form>
+                              <!-- /.card -->
+                            </div>
+                            <div class="col-md-6">
+                              <div class="card card-secondary">
+                                <div class="card-body">
+                                  <div class="form-group">
+                                    <label for="inputEstimatedBudget">Reviewer's Comment</label>
+                                    <angular-editor id="editorEmployee" [(ngModel)]="htmlContent" [config]="config"></angular-editor>
+                                  </div>
+                                   <div class="form-group">
+                                     <div class="row">
+                                      <label for="inputEstimatedBudget">Is Complete</label>
+                                     </div>
+                                    <div class="row">
+                                    <label class="switch">
+                                      <input type="checkbox" id="togBtn">
+                                      <div class="slider"></div>
+                                    </label>
+                                    </div>
+                                  </div>
+                                </div>
+                                <!-- /.card-body -->
+                              </div>
+                              <!-- /.card -->
+                            </div>
+                          </div>
+                          <div class="row">
+                            <div class="col-12">
+                              <input type="submit" value="Create new Porject" class="btn btn-success float-right">
+                            </div>
+                          </div>
+                        </section>
+                      </tab>
+                      <tab heading="Emerging Technology Monitoring" (selectTab)="onSelect($event)">Emerging Technology Monitoring</tab>
+                      <tab heading="Capability Development" (selectTab)="onSelect($event)">Capability Development</tab>
+                      <tab heading="Values & Leadership" (selectTab)="onSelect($event)">Values & Leadership</tab>
+                    </tabset>
+
+                  </div>
+                  
+                </nav>
               </div>
           </div>
           <!-- /.card-body -->
