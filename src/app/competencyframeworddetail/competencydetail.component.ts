@@ -25,6 +25,7 @@ import { TabDirective, TabsetComponent } from 'ngx-bootstrap/tabs';
 export class CompetencydetailComponent implements OnInit {
   information: string;
   CompetencyNameList: Competencydetail[];
+<<<<<<< HEAD
   employeecompetency: Employeecompetency;
   fileData: File = null;
   previewUrl: any = null;
@@ -38,6 +39,19 @@ export class CompetencydetailComponent implements OnInit {
   btnDraftDisabled = false;
   btnSaveDisabled = false;
   isOpen = false
+=======
+  employeeCompetency: Employeecompetency;
+  form: FormGroup;
+  EmployeeCommnet:FormGroup;
+fileData: File = null;
+previewUrl:any = null;
+fileUploadProgress: string = null;
+uploadedFilePath: string = null;
+fileName = "";
+fileSize = 0;
+fileType = 0;
+isUpload = false; 
+>>>>>>> 9dcb3f52b836609faa7088b0cbd1465f5927e8b3
 
   @ViewChild(TabsetComponent) tabset: TabsetComponent;
 
