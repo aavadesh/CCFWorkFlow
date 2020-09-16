@@ -7,6 +7,7 @@ import { CompetencydetailComponent } from './competencydetail.component';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { TabsModule} from 'ngx-bootstrap/tabs';  
 import { AngularEditorModule } from '@kolkov/angular-editor';
+import { AlertModule } from 'ngx-bootstrap/alert';
 
 
 @NgModule({
@@ -15,6 +16,7 @@ import { AngularEditorModule } from '@kolkov/angular-editor';
     CompetencydetailRoutingModule,
     FlexLayoutModule,
     TabsModule.forRoot(),
+    AlertModule.forRoot(),
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule, 

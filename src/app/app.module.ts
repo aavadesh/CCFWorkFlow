@@ -17,6 +17,7 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import {AuthInterceptor} from './services/AuthInterceptor';
 import {HttpErrorInterceptor} from './services/http-error.interceptor';
 import { CompetencydetailModule } from './competencyframeworddetail/competencydetail.module';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 
 @NgModule({
@@ -37,7 +38,8 @@ import { CompetencydetailModule } from './competencyframeworddetail/competencyde
     UsersModule,
     CompetencyframeworkModule,
     CompetencydetailModule,
-    HttpClientModule
+    HttpClientModule,
+    BrowserAnimationsModule
   ],
   providers: [ { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
     {

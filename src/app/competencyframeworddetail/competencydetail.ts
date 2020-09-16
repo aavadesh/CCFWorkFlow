@@ -1,6 +1,7 @@
 export class Competencydetail {
     competencyID: number;
     competencyFrameworkID: number;
-    CompetencyName: string;
+    competencyName: string;
     active: boolean;
+    details: boolean;
 }
