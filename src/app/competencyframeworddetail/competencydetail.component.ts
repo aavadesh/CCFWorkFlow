@@ -23,7 +23,7 @@ export class CompetencydetailComponent implements OnInit {
   CompetencyNameList: Competencydetail[];
   employeeCompetency: Employeecompetency;
   form: FormGroup;
-
+  EmployeeCommnet:FormGroup;
 fileData: File = null;
 previewUrl:any = null;
 fileUploadProgress: string = null;
@@ -145,22 +145,6 @@ preview() {
       alert('Uploaded!!');
     });
   }
-
-  onSubmit(data) {
-    let formData = new FormData();
-    formData.append('EmployeeCommnet', data.EmployeeCommnet);
-    formData.append('Files', this.fileData);
-
-    const headers = new HttpHeaders().append('Content-Disposition', 'multipart/form-data');
-
-    this.http.post('http://localhost:30285/api/EmployeeCompetency', formData, {headers: headers})
-    .subscribe(res => {
-  
-      alert('Uploaded!!');
-    });
-  }
-
-
   onSelect(data: TabDirective): void {
     debugger;
    alert(data.heading);
