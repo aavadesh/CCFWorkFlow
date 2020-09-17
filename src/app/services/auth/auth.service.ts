@@ -1,3 +1,4 @@
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import createAuth0Client from '@auth0/auth0-spa-js';
@@ -39,7 +40,7 @@ export class AuthService {
   // Create a local property for login status
   loggedIn: boolean = null;
 
-  constructor(private router: Router) {
+  constructor(private router: Router,protected _httpClient :HttpClient) {
     // On initial load, check authentication state with authorization server
     // Set up local auth streams if user is already authenticated
     this.localAuthSetup();
@@ -50,18 +51,25 @@ export class AuthService {
   // When calling, options can be passed if desired
   // https://auth0.github.io/auth0-spa-js/classes/auth0client.html#getuser
   getUser$(options?): Observable<any> {
+    debugger
     return this.auth0Client$.pipe(
       concatMap((client: Auth0Client) => from(client.getUser(options))),
-      tap(user => this.userProfileSubject$.next(user))
+      tap(user => this.userProfileSubject$.next(user)),
+      tap(user => localStorage.setItem("User",user.sub)),
+      tap(user => localStorage.setItem("UserName",user.name))
     );
   }
   getToken$(options?): Observable<any> {
+   debugger
     return this.auth0Client$.pipe(
       concatMap((client: Auth0Client) => from(client.getTokenSilently(options))),
-      tap(token => localStorage.setItem('token',token))
+      tap(token => localStorage.setItem('token',token)),
+      //tap(token => this.getUserRole(token))
     );
   }
-
+  getUserRole(token){
+    return true;
+  }
   private localAuthSetup() {
     // This should only be called on app initialization
     // Set up local authentication streams
@@ -90,7 +98,7 @@ export class AuthService {
       }).then(token =>{
         const _token= client.getTokenSilently();
         console.log(_token)
-      });
+      })
     });
   }
 
