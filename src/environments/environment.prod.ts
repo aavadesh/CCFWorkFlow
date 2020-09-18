@@ -1,4 +1,4 @@
 export const environment = {
   production: true,
-  apiEndpoint:"http://localhost:30285"
+  apiEndpoint:"https://ccfappservice.azurewebsites.net"
 };
