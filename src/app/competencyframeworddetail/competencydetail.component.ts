@@ -58,7 +58,7 @@ export class CompetencydetailComponent implements OnInit {
     this.employeeCompetencyForm = this.formBuilder.group({
       EmployeeCommnet: new FormControl(null),
       Files: new FormControl(null),
-      IsSave: new FormControl(null),
+      IsSave: new FormControl(false),
       IsDraft: new FormControl(null),
       CompetencyID: new FormControl(null),
       ReviewerComment: new FormControl(null),
