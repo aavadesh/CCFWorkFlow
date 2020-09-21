@@ -1,13 +1,14 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { DashboardComponent } from './dashboard.component';
-import { AuthGuard } from '../services/auth/auth.guard'
+import { CompetencyframeworkComponent } from './competencyframework.component';
+
 const routes: Routes = [
-  { path: '',component: DashboardComponent},
+  { path: '', component: CompetencyframeworkComponent }
 ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]
 })
-export class DashboardRoutingModule { }
+
+export class CompetencyframeworkRoutingModule { }

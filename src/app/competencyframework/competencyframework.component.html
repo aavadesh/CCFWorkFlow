@@ -1,0 +1,113 @@
+<div class="content-wrapper">
+  <!-- Content Header (Page header) -->
+
+  <!-- /.content-header -->
+  <section class="content-header">
+    <div class="container-fluid">
+      <div class="row mb-2">
+        <div class="col-sm-6">
+          <h1>Competency Framework</h1>
+        </div>
+        <div class="col-sm-6">
+          <ol class="breadcrumb float-sm-right">
+            <li class="breadcrumb-item"><a href="#">Home</a></li>
+            <li class="breadcrumb-item active">Competency Framework</li>
+          </ol>
+        </div>
+      </div>
+    </div>
+    <!-- /.container-fluid -->
+  </section>
+
+  <!-- Main content -->
+  <section class="content">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-12">
+          <div class="card">
+            <div class="card-header">
+              <h3 class="card-title">Competency Framework List</h3>
+
+              <div class="card-tools">
+                <div class="input-group input-group-sm" style="width: 150px">
+                  <input type="text" style="float: right" (keyup)="applyFilter($event.target.value)"
+                    placeholder="search for" class="form-control float-right" />
+
+                  <div class="input-group-append">
+                    <button type="submit" class="btn btn-default">
+                      <i class="fas fa-search"></i>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- /.card-header -->
+            <div class="card-body table-responsive p-0">
+              <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
+                <ng-container matColumnDef="id">
+                  <ng-container matColumnDef="name" style="widows: 94% !important">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                      Name
+                    </th>
+                    <td mat-cell *matCellDef="let element">
+                      {{ element.name }}
+                    </td>
+                  </ng-container>
+
+                  <!-- Action Column -->
+                  <ng-container matColumnDef="action">
+                    <th mat-header-cell *matHeaderCellDef>Action</th>
+                    <td mat-cell *matCellDef="let element" class="action-link">
+                      <!-- <a (click)="apply(element)"><i class="fas fa-folder"></i>Apply</a>   -->
+
+                      <a class="btn btn-primary btn-sm" [routerLink]="[
+                          '/competencydetail',
+                          element.competencyFrameworkID
+                        ]">
+                        <i class="fas fa-folder"> </i>
+                        Apply
+                      </a>
+                    </td>
+                  </ng-container>
+
+                  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                  <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+                </ng-container>
+              </table>
+
+              <mat-paginator [pageSizeOptions]="[3, 10, 20]" showFirstLastButtons></mat-paginator>
+
+              <!-- <table mat-table [dataSource]="MyDataSource" class="mat-elevation-z8">
+                  <ng-container matColumnDef="name">
+                    <th mat-header-cell *matHeaderCellDef> Name </th>
+                    <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+                  </ng-container> -->
+              <!-- <thead>
+                    <tr>
+                      <th>Name</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                      <tr *ngFor="let competencyFramework of competencyFrameworkList">
+                          <td>{{competencyFramework.name}}</td>
+                          <td class="text-right">
+                              <a class="btn btn-primary btn-sm" [routerLink]="['/competencydetail', competencyFramework.competencyFrameworkID]">
+                                  <i class="fas fa-folder">
+                                  </i>
+                                  Apply
+                              </a>
+                          </td>
+                        </tr>
+                  </tbody> -->
+              <!-- </table> -->
+            </div>
+            <!-- /.card-body -->
+          </div>
+          <!-- /.card -->
+        </div>
+      </div>
+    </div>
+    <!--/. container-fluid -->
+  </section>
+  <!-- /.content -->
+</div>

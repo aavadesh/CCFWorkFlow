@@ -1,0 +1,191 @@
+<div class="content-wrapper">
+
+  <alert *ngIf="isOpen" type="success" dismissOnTimeout="5000" (onClosed)="isOpen = false">
+    Added Successfully
+  </alert>
+
+  <!-- Content Header (Page header) -->
+  <section class="content-header">
+    <div class="container-fluid">
+      <div class="row mb-2">
+        <div class="col-sm-6">
+          <h1>Competency Framework Detail</h1>
+        </div>
+        <div class="col-sm-6">
+          <ol class="breadcrumb float-sm-right">
+            <li class="breadcrumb-item"><a href="#">Home</a></li>
+            <li class="breadcrumb-item active">Competency Framework</li>
+          </ol>
+        </div>
+      </div>
+    </div>
+    <!-- /.container-fluid -->
+  </section>
+
+  <section class="content">
+    <!-- Default box -->
+    <div class="card">
+      <div class="card-header">
+        <h3 class="card-title">Core Competencies</h3>
+
+        <div class="card-tools">
+          <button type="button" class="btn btn-tool" data-card-widget="collapse" data-toggle="tooltip" title="Collapse">
+            <i class="fas fa-minus"></i>
+          </button>
+        </div>
+      </div>
+      <div class="card-body">
+        <div class="row">
+          <div id="accordion" style="width: 100% !important">
+            <!-- we are adding the .class so bootstrap.js collapse plugin detects it -->
+            <div class="card card-primary">
+              <div class="card-header">
+                <h4 class="card-title">
+                  <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne" class="" aria-expanded="true">
+                    Introduction
+                  </a>
+                </h4>
+              </div>
+              <div id="collapseOne" class="panel-collapse in collapse show" style="">
+                <div class="card-body">
+                  <ul class="text-muted">
+                    <p [innerHTML]="information"></p>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="row mt-4">
+          <nav class="w-100">
+            <div class="nav nav-tabs" id="product-tab" role="tablist">
+              <tabset>
+                <tab heading="Solution Architecture" id="tab1" (selectTab)="onSelect($event)">
+                  <section class="content" style="margin: 10px">
+                    <ul class="text-muted">
+                      <p [innerHTML]="competencyInformation"></p>
+                    </ul>
+
+                    <div class="row">
+                      <form [formGroup]="employeeCompetencyForm" (ngSubmit)="onSubmit(employeeCompetencyForm.value)">
+                        <input type="hidden" formControlName="EmployeeCompetencyID" />
+                        <input type="hidden" formControlName="CompetencyID" />
+                        <input type="hidden" formControlName="IsComplete" />
+                        <input type="hidden" formControlName="IsSave" />
+                        <input type="hidden" formControlName="IsDraft" />
+                        <input type="hidden" formControlName="ReviewID" />
+                        <input type="hidden" formControlName="EmployeeID" />
+
+                        <div class="row">
+                          <div class="col-md-6">
+                            <div class="card card-primary">
+                              <div class="card-body">
+                                <div class="form-group">
+                                  <label for="EmployeeCommnet">Employee Comment</label>
+                                  <angular-editor [config]="config" formControlName="EmployeeCommnet"></angular-editor>
+                                </div>
+                                <div class="form-group">
+                                  <div class="row">
+                                    <label for="Files">Attach Proof<span class="text-muted"></span></label>
+                                  </div>
+                                  <div class="row">
+                                    <div class="btn btn-default btn-file">
+                                      <i class="fas fa-paperclip"></i>
+                                      Attachment
+                                      <input type="file" formControlName="Files" (change)="fileProgress($event)" />
+                                    </div>
+                                  </div>
+                                </div>
+                                <div class="card-footer bg-white" *ngIf="isUpload">
+                                  <ul class="mailbox-attachments d-flex align-items-stretch clearfix">
+                                    <li>
+                                      <span class="mailbox-attachment-icon" [ngSwitch]="fileType">
+                                        <i class="far fa-file-pdf" *ngSwitchCase="2"></i>
+                                        <i class="far fa-file-word" *ngSwitchCase="1"></i>
+                                        <i class="far fa-file-image" *ngSwitchCase="4"></i>
+                                        <i class="far fa-file-excel" *ngSwitchCase="3"></i>
+                                      </span>
+                                      <div class="mailbox-attachment-info">
+                                        <a href="#" class="mailbox-attachment-name"><i class="fas fa-paperclip"></i>
+                                          {{ fileName }}
+                                        </a>
+                                        <span class="mailbox-attachment-size clearfix mt-1">
+                                          <span>{{ fileSize }} KB</span>
+                                          <a href="#" class="btn btn-default btn-sm float-right"><i
+                                              class="fas fa-cloud-download-alt"></i></a>
+                                        </span>
+                                      </div>
+                                    </li>
+                                  </ul>
+                                </div>
+                              </div>
+                            </div>
+                            <div class="card-footer">
+                              <div class="float-left">
+                                <button type="button" (click)="
+                                    onDraft(employeeCompetencyForm.value)
+                                  " class="btn btn-default">
+                                  <i class="fas fa-pencil-alt"></i> Draft
+                                </button>
+                                <button type="submit" class="btn btn-success">
+                                  <i class="far fa-envelope"></i> Submit
+                                </button>
+                              </div>
+                            </div>
+                            <!-- /.card -->
+                          </div>
+                          <div class="col-md-6">
+                            <div class="card card-secondary">
+                              <div class="card-body">
+                                <div class="form-group">
+                                  <label for="inputEstimatedBudget">Reviewer Comment</label>
+                                  <angular-editor [config]="config" formControlName="ReviewerComment"></angular-editor>
+                                </div>
+                                <div class="form-group">
+                                  <div class="row">
+                                    <label for="inputEstimatedBudget">Is Complete</label>
+                                  </div>
+                                  <div class="row">
+                                    <label class="switch">
+                                      <input type="checkbox" id="togBtn" formControlName="IsComplete" />
+                                      <div class="slider"></div>
+                                    </label>
+                                  </div>
+                                </div>
+                              </div>
+                              <!-- /.card-body -->
+                            </div>
+                            <div class="card-footer">
+                              <div class="float-right">
+                                <button type="button" (click)="
+                                    onSubmitReviewer(
+                                      employeeCompetencyForm.value
+                                    )
+                                  " class="btn btn-success">
+                                  <i class="far fa-envelope"></i> Submit
+                                </button>
+                              </div>
+                            </div>
+
+                            <!-- /.card -->
+                          </div>
+                        </div>
+                      </form>
+                    </div>
+                  </section>
+                </tab>
+                <tab heading="Emerging Technology Monitoring" (selectTab)="onSelect($event)">Emerging Technology
+                  Monitoring</tab>
+                <tab heading="Capability Development" (selectTab)="onSelect($event)">Capability Development</tab>
+                <tab heading="Values & Leadership" (selectTab)="onSelect($event)">Values & Leadership</tab>
+              </tabset>
+            </div>
+          </nav>
+        </div>
+      </div>
+      <!-- /.card-body -->
+    </div>
+    <!-- /.card -->
+  </section>
+</div>
