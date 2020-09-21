@@ -16,6 +16,7 @@ import { from, Observable, Subscription } from 'rxjs';
 import { AngularEditorConfig } from '@kolkov/angular-editor';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { TabDirective, TabsetComponent } from 'ngx-bootstrap/tabs';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-competencydetail',
@@ -37,8 +38,8 @@ export class CompetencydetailComponent implements OnInit {
   EmployeeCompetencyID = 0;
   btnDraftDisabled = false;
   btnSaveDisabled = false;
-  isOpen = false
-
+  isOpen = false;
+  protected _apiEndpoint : string  = environment.apiEndpoint;
   @ViewChild(TabsetComponent) tabset: TabsetComponent;
 
   employeeCompetencyForm: FormGroup;
@@ -70,7 +71,6 @@ export class CompetencydetailComponent implements OnInit {
 
     this.bindCompetencyNoteByID();
     this.bindCompetencyNameByID();
-    this.bindEmployeeCompetency(this.competencyID);
 
     this.btnDraftDisabled = true;
     this.btnSaveDisabled = true;
@@ -88,6 +88,7 @@ export class CompetencydetailComponent implements OnInit {
     this.competencyDetailService
       .findById(this.route.snapshot.params['id'])
       .subscribe((resp: Competencydetail[]) => {
+        debugger
         this.CompetencyNameList = resp;
         const activeTab = this.tabset.tabs.filter((tab) => tab.active);
         let result = this.CompetencyNameList.find(
@@ -97,23 +98,30 @@ export class CompetencydetailComponent implements OnInit {
         if (result != undefined) {
           this.competencyInformation = (result.details as unknown) as string;
         }
+
+        
+    this.bindEmployeeCompetency(this.competencyID);
       });
   }
 
   bindEmployeeCompetency(competencyID: number) {
-    this.employeeCompetencyService.findEmployeeCompetecyById(competencyID).subscribe((res : Employeecompetency) => {
-        this.btnDraftDisabled = false;
+    this.employeeCompetencyService.findEmployeeCompetecyById(competencyID).subscribe((res : any) => {
+      if(res){
+        
+      
+      this.btnDraftDisabled = false
         this.employeeCompetencyForm.patchValue({
-          EmployeeCompetencyID: res.EmployeeCompetencyID,
-          EmployeeCommnet: res.EmployeeCommnet,
-          ReviewerComment: res.ReviewerComment,
-          IsComplete: res.IsComplete,
-          IsSave: res.IsSave,
-          IsDraft: res.IsDraft,
-          EmployeeID: res.EmployeeID,
-          ReviewID: res.ReviewID,
-          CompetencyID: res.CompetencyID
+          EmployeeCompetencyID: res.employeeCompetencyID,
+          EmployeeCommnet: res.employeeCommnet,
+          ReviewerComment: res.reviewerComment,
+          IsComplete: res.isComplete,
+          IsSave: res.isSave,
+          IsDraft: res.isDraft,
+          EmployeeID: res.employeeID,
+          ReviewID: res.reviewID,
+          CompetencyID: res.competencyID
         });
+      }
       });
 
     this.competencyframeworkService
@@ -174,16 +182,17 @@ export class CompetencydetailComponent implements OnInit {
   }
 
   getFormData(
-    employeeCompetencyData
+    employeeCompetencyData, isSave, isDraft, isComplete
   ): FormData {
+    debugger
     const formData = new FormData();
     formData.append('EmployeeCommnet', employeeCompetencyData.EmployeeCommnet);
     formData.append('ReviewerComment', employeeCompetencyData.ReviewerComment ?  null : '');
     formData.append('Files', this.fileData);
     formData.append('EmployeeID', '1');
-    formData.append('IsSave', 'false');
-    formData.append('IsDraft', 'false');
-    formData.append('IsComplete','false');
+    formData.append('IsSave', isSave);
+    formData.append('IsDraft', isDraft);
+    formData.append('IsComplete' ,isComplete);
     formData.append('EmployeeCompetencyID', employeeCompetencyData.EmployeeCompetencyID  ?  null : '0');
     formData.append('CompetencyID', this.competencyID.toString());
     formData.append('ReviewID', '2');
@@ -191,16 +200,15 @@ export class CompetencydetailComponent implements OnInit {
   }
 
   onSubmit(employeeCompetencyData): void {
-    debugger;
     employeeCompetencyData.IsSave= 'true';
-    const formData = this.getFormData(employeeCompetencyData);
+    const formData = this.getFormData(employeeCompetencyData, 'true', 'false', 'false');
 
     const headers = new HttpHeaders().append(
       'Content-Disposition',
       'multipart/form-data'
     );
     this.http
-      .post<any>('https://ccfappservice.azurewebsites.net/api/EmployeeCompetency', formData, {
+      .post<any>(`${this._apiEndpoint}/api/EmployeeCompetency`, formData, {
         headers: headers,
       })
       .subscribe((res) => {
@@ -225,7 +233,7 @@ export class CompetencydetailComponent implements OnInit {
     if (this.EmployeeCompetencyID == 0) {
       employeeCompetencyData.IsDraft = 'true';
       employeeCompetencyData.EmployeeCompetencyID = 0;
-      const formData = this.getFormData(employeeCompetencyData);
+      const formData = this.getFormData(employeeCompetencyData, 'false', 'true', 'false');
 
       const headers = new HttpHeaders().append(
         'Content-Disposition',
@@ -233,7 +241,7 @@ export class CompetencydetailComponent implements OnInit {
       );
 
       this.http
-        .post<any>('https://ccfappservice.azurewebsites.net/api/EmployeeCompetency', formData, {
+        .post<any>(`${this._apiEndpoint}/api/EmployeeCompetency`, formData, {
           headers: headers,
         })
         .subscribe((res) => {
@@ -256,21 +264,20 @@ export class CompetencydetailComponent implements OnInit {
   }
 
   onSubmitReviewer(employeeCompetencyData): void {
-
+debugger
     if (this.employeeCompetencyForm.get('EmployeeCompetencyID').value > 0 &&
       this.employeeCompetencyForm.get('IsSave').value == true) {
       employeeCompetencyData.IsComplete = 'true';
-      const formData = this.getFormData(employeeCompetencyData);
+      const formData = this.getFormData(employeeCompetencyData, 'false','false', 'true');
 
       const headers = new HttpHeaders().append(
         'Content-Disposition',
-        'multipart/form-data'
+        'multipart/form-data',
       );
-      debugger;
-      const params = new HttpParams().set('id', employeeCompetencyData.EmployeeCompetencyID);
-      this.http.put<any>('https://ccfappservice.azurewebsites.net/api/EmployeeCompetency', formData, { headers: headers })
+      //const params = new HttpParams().set('id', employeeCompetencyData.EmployeeCompetencyID);
+      this.http.put<any>(`${this._apiEndpoint}/api/EmployeeCompetency`, formData, { headers: headers })
         .subscribe((res) => {
-          debugger;
+          ;
           alert('Employee data Updated successfully !!');
         });
       this.isUpload = false;

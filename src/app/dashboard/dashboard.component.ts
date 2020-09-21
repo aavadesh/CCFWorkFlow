@@ -10,9 +10,7 @@ export class DashboardComponent implements OnInit {
   constructor(private ValueServ : ValueService) { }
 
   ngOnInit(): void {
-    debugger
   this.ValueServ.findAll().subscribe((resp =>{
-    debugger;
 
   }))
   }

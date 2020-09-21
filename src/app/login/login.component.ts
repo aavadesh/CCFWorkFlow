@@ -9,13 +9,11 @@ export class LoginComponent implements OnInit, OnDestroy {
   constructor(public auth: AuthService) { }
 
   ngOnInit(): void {
-    debugger;
     const body = document.getElementsByTagName('body')[0];
     body.classList.remove('content-wrapper');
   }
 
   ngOnDestroy(): void {
-    debugger;
     const body = document.getElementsByTagName('body')[0];
     body.classList.remove('content-wrapper');
   }

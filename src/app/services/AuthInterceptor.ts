@@ -11,7 +11,6 @@ export class AuthInterceptor implements HttpInterceptor {
   intercept(req: HttpRequest<any>, next: HttpHandler) {
     // Get the auth token from the service.
     if(req.headers.has(InterceptorSkipHeader)){
-      debugger
       const headers = req.headers.delete(InterceptorSkipHeader);
       return next.handle(req.clone({ headers }));
     }

@@ -51,7 +51,6 @@ export class AuthService {
   // When calling, options can be passed if desired
   // https://auth0.github.io/auth0-spa-js/classes/auth0client.html#getuser
   getUser$(options?): Observable<any> {
-    debugger
     return this.auth0Client$.pipe(
       concatMap((client: Auth0Client) => from(client.getUser(options))),
       tap(user => this.userProfileSubject$.next(user)),
@@ -60,7 +59,7 @@ export class AuthService {
     );
   }
   getToken$(options?): Observable<any> {
-   debugger
+   
     return this.auth0Client$.pipe(
       concatMap((client: Auth0Client) => from(client.getTokenSilently(options))),
       tap(token => localStorage.setItem('token',token)),
