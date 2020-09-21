@@ -183,9 +183,9 @@ export class CompetencydetailComponent implements OnInit {
     formData.append('ReviewerComment', employeeCompetencyData.ReviewerComment ?  null : '');
     formData.append('Files', this.fileData);
     formData.append('EmployeeID', '1');
-    formData.append('IsSave', employeeCompetencyData.IsSave ?  null : 'false');
-    formData.append('IsDraft', employeeCompetencyData.IsDraft ?  null : 'false');
-    formData.append('IsComplete', employeeCompetencyData.IsComplete ?  null : 'false');
+    formData.append('IsSave', 'false');
+    formData.append('IsDraft', 'false');
+    formData.append('IsComplete','false');
     formData.append('EmployeeCompetencyID', employeeCompetencyData.EmployeeCompetencyID  ?  null : '0');
     formData.append('CompetencyID', this.competencyID.toString());
     formData.append('ReviewID', '2');
