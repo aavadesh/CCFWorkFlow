@@ -102,7 +102,7 @@ export class CompetencydetailComponent implements OnInit {
 
   bindEmployeeCompetency(competencyID: number) {
     this.http
-      .get<any>('http://localhost:30285/api/EmployeeCompetency/' + competencyID + '/' + 1)
+      .get<any>('https://ccfappservice.azurewebsites.net/api/EmployeeCompetency/' + competencyID + '/' + 1)
       .subscribe((res) => {
         this.btnDraftDisabled = false;
         this.employeeCompetencyForm.patchValue({
@@ -202,7 +202,7 @@ export class CompetencydetailComponent implements OnInit {
       'multipart/form-data'
     );
     this.http
-      .post<any>('http://localhost:30285/api/EmployeeCompetency', formData, {
+      .post<any>('https://ccfappservice.azurewebsites.net/api/EmployeeCompetency', formData, {
         headers: headers,
       })
       .subscribe((res) => {
@@ -235,7 +235,7 @@ export class CompetencydetailComponent implements OnInit {
       );
 
       this.http
-        .post<any>('http://localhost:30285/api/EmployeeCompetency', formData, {
+        .post<any>('https://ccfappservice.azurewebsites.net/api/EmployeeCompetency', formData, {
           headers: headers,
         })
         .subscribe((res) => {
@@ -270,7 +270,7 @@ export class CompetencydetailComponent implements OnInit {
       );
       debugger;
       const params = new HttpParams().set('id', employeeCompetencyData.EmployeeCompetencyID);
-      this.http.put<any>('http://localhost:30285/api/EmployeeCompetency', formData, { headers: headers })
+      this.http.put<any>('https://ccfappservice.azurewebsites.net/api/EmployeeCompetency', formData, { headers: headers })
         .subscribe((res) => {
           debugger;
           alert('Employee data Updated successfully !!');
