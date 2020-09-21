@@ -15,8 +15,8 @@ const fallbackRoute: Route = {
 const routes: Routes = [
   { path: 'dashboard', loadChildren: './dashboard/dashboard.module#DashboardModule',canActivate:[AuthGuard] },
   { path: 'users', loadChildren: './users/users.module#UsersModule'},
-  { path: 'competencyframework', loadChildren: './competencyframework/competencyframework.module#CompetencyframeworkModule'},
-  { path: 'competencydetail/:id', loadChildren: './competencyframeworddetail/competencydetail.module#CompetencydetailModule'},
+  { path: 'competencyframework', loadChildren: './competencyframework/competencyframework.module#CompetencyframeworkModule',canActivate:[AuthGuard]},
+  { path: 'competencydetail/:id', loadChildren: './competencyframeworddetail/competencydetail.module#CompetencydetailModule',canActivate:[AuthGuard]},
   {
     path: 'login',
     loadChildren: './login/login.module#LoginModule',
