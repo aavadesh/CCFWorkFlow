@@ -59,7 +59,7 @@ export class CompetencydetailComponent implements OnInit {
       EmployeeCommnet: new FormControl(null),
       Files: new FormControl(null),
       IsSave: new FormControl(false),
-      IsDraft: new FormControl(null),
+      IsDraft: new FormControl(false),
       CompetencyID: new FormControl(null),
       ReviewerComment: new FormControl(null),
       ReviewID: new FormControl(null),
