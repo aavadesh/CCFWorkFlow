@@ -101,19 +101,17 @@ export class CompetencydetailComponent implements OnInit {
   }
 
   bindEmployeeCompetency(competencyID: number) {
-    this.http
-      .get<any>('https://ccfappservice.azurewebsites.net/api/EmployeeCompetency/' + competencyID + '/' + 1)
-      .subscribe((res) => {
+    this.employeeCompetencyService.findEmployeeCompetecyById(competencyID).subscribe((res : Employeecompetency) => {
         this.btnDraftDisabled = false;
         this.employeeCompetencyForm.patchValue({
-          EmployeeCompetencyID: res.employeeCompetencyID,
-          EmployeeCommnet: res.employeeCommnet,
-          ReviewerComment: res.reviewerComment,
-          IsComplete: res.isComplete,
-          IsSave: res.isSave,
-          IsDraft: res.isDraft,
-          EmployeeID: res.employeeID,
-          ReviewID: res.reviewID,
+          EmployeeCompetencyID: res.EmployeeCompetencyID,
+          EmployeeCommnet: res.EmployeeCommnet,
+          ReviewerComment: res.ReviewerComment,
+          IsComplete: res.IsComplete,
+          IsSave: res.IsSave,
+          IsDraft: res.IsDraft,
+          EmployeeID: res.EmployeeID,
+          ReviewID: res.ReviewID,
           CompetencyID: res.CompetencyID
         });
       });
