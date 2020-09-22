@@ -15,7 +15,9 @@ export class EmployeecompetencyService extends APIService<
   constructor(protected _http: HttpClient) {
     super(_http, 'api/EmployeeCompetency');
   }
-
+  // findEmployeeCompetecyById(id: number): Observable<any[]> {
+  //   return this._http.get<any>(this._apiEndpoint + "/" + id);
+  // }
   edit(emp: FormData) {
     var empID = emp.get('EmployeeCompetencyID');
     const params = new HttpParams().set('Id', empID.toString());
@@ -26,4 +28,9 @@ export class EmployeecompetencyService extends APIService<
       { headers, params }
     );
   }
+
+  findEmployeeCompetecyById(id: number): Observable<Employeecompetency> {
+    return this._http.get<Employeecompetency>(this._apiEndpoint + '/' + id + '/' + 1)
+  }
+  
 }

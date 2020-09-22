@@ -1,5 +1,5 @@
 
-import { NgModule,NO_ERRORS_SCHEMA,CUSTOM_ELEMENTS_SCHEMA  } from '@angular/core';
+import { NgModule, NO_ERRORS_SCHEMA, CUSTOM_ELEMENTS_SCHEMA  } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
 import { AppComponent } from './app.component';
@@ -18,10 +18,13 @@ import {AuthInterceptor} from './services/AuthInterceptor';
 import {HttpErrorInterceptor} from './services/http-error.interceptor';
 import { CompetencydetailModule } from './competencyframeworddetail/competencydetail.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { AddCompetencyFrameworkModule } from './add-competency-framework/add-competency-framework.module';
+import { EditCompetencyFrameworkModule } from './edit-competency-framework/edit-competency-framework.module';
+
 
 
 @NgModule({
-  declarations: [ 
+  declarations: [
     AppComponent,
     SearchPipe
   ],
@@ -39,7 +42,9 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     CompetencyframeworkModule,
     CompetencydetailModule,
     HttpClientModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    AddCompetencyFrameworkModule,
+    EditCompetencyFrameworkModule
   ],
   providers: [ { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
     {

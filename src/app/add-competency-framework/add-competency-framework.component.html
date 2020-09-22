@@ -1,0 +1,66 @@
+
+<div class="content-wrapper">
+
+  <!-- Content Header (Page header) -->
+  <section class="content-header">
+    <div class="container-fluid">
+      <div class="row mb-2">
+        <div class="col-sm-6">
+          <h1>Competency Framework</h1>
+        </div>
+        <div class="col-sm-6">
+          <ol class="breadcrumb float-sm-right">
+            <li class="breadcrumb-item"><a href="#">Home</a></li>
+            <li class="breadcrumb-item active">Competency Framework</li>
+          </ol>
+        </div>
+      </div>
+    </div>
+    <!-- /.container-fluid -->
+  </section>
+
+<section class="content">
+   
+    <div class="container-fluid">
+        <!-- left column -->
+          <!-- general form elements -->
+          <div class="card card-primary">
+            <div class="card-header">
+              <h3 class="card-title">Add Competency Framework</h3>
+            </div>
+<form [formGroup]="form" (ngSubmit)="submit()">
+    <div class="card-body">
+      <div class="form-group">
+        <label for="Name">Name</label>
+        <input type="text" class="form-control" id="name" placeholder="Enter Name"
+        formControlName="name">
+        <div *ngIf="f.name.touched && f.name.invalid" class="alert alert-danger">
+            <div *ngIf="f.name.errors.required">Name is required.</div>
+        </div>
+      </div>
+     
+      <div class="form-group">
+        <label for="Information">Information</label>
+        <textarea class="form-control" rows="3" id="details" placeholder="Enter Information"
+        formControlName="details"></textarea>
+        <div *ngIf="f.details.touched && f.details.invalid" class="alert alert-danger">
+            <div *ngIf="f.details.errors.required">Details is required.</div>
+        </div>
+      </div>
+      <div class="form-check">
+        <input type="checkbox" class="form-check-input" id="isactive"
+        formControlName="isactive">
+        <label class="form-check-label" for="isactive">Is Active</label>
+      </div>
+    </div>
+    <!-- /.card-body -->
+
+    <div class="card-footer">
+      <button type="submit" class="btn btn-primary" [disabled]="!form.valid" value="Add" >Submit</button>
+      <a href="#" routerLink="/competencyframework" class="btn btn-primary">Cancel</a>
+    </div>
+  </form>
+      </div>
+    </div>
+</section>
+</div>
