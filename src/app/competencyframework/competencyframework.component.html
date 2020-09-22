@@ -26,8 +26,7 @@
         <div class="col-12">
           <div class="card">
             <div class="card-header">
-              <h3 class="card-title">Competency Framework List</h3>
-
+                <a [routerLink]="['/competency-framework/add']" class="btn btn-primary">Add New Competency</a>
               <div class="card-tools">
                 <div class="input-group input-group-sm" style="width: 150px">
                   <input type="text" style="float: right" (keyup)="applyFilter($event.target.value)"
@@ -49,7 +48,7 @@
                     <th mat-header-cell *matHeaderCellDef mat-sort-header>
                       Name
                     </th>
-                    <td mat-cell *matCellDef="let element">
+                    <td mat-cell *matCellDef="let element" style="width: 80%;">
                       {{ element.name }}
                     </td>
                   </ng-container>
@@ -60,13 +59,23 @@
                     <td mat-cell *matCellDef="let element" class="action-link">
                       <!-- <a (click)="apply(element)"><i class="fas fa-folder"></i>Apply</a>   -->
 
-                      <a class="btn btn-primary btn-sm" [routerLink]="[
-                          '/competencydetail',
-                          element.competencyFrameworkID
-                        ]">
+                      <a class="btn btn-primary btn-sm"  style="margin:2px;"
+                      [routerLink]="['/competencydetail',element.competencyFrameworkID]">
                         <i class="fas fa-folder"> </i>
                         Apply
                       </a>
+
+                      <a class="btn btn-primary btn-sm" style="margin:2px;"
+                      [routerLink]="['/competency-framework/', element.competencyFrameworkID, 'edit']">
+                    <i class="fas fa-pencil-alt"> </i>
+                    Edit
+                  </a>
+
+                  <a class="btn btn-primary btn-sm" style="margin:2px;"
+                  (click)="deleteClick(element.competencyFrameworkID)">
+                <i class="fa fa-trash-alt"> </i>
+                Delete
+              </a>
                     </td>
                   </ng-container>
 

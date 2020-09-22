@@ -2,26 +2,26 @@ import { NgModule } from '@angular/core';
 import { HttpClientModule} from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { CompetencydetailRoutingModule } from './competencydetail-routing.module';
-import { CompetencydetailComponent } from './competencydetail.component';
+import { EditCompetencyFrameworkRoutingModule } from './edit-competency-framework-routing.module';
+import { EditCompetencyFrameworkComponent } from './edit-competency-framework.component';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { TabsModule} from 'ngx-bootstrap/tabs';
 import { AngularEditorModule } from '@kolkov/angular-editor';
-import { AlertModule } from 'ngx-bootstrap/alert';
-
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ToastrModule } from 'ngx-toastr';
 
 @NgModule({
   imports: [
     CommonModule,
-    CompetencydetailRoutingModule,
+    EditCompetencyFrameworkRoutingModule,
     FlexLayoutModule,
     TabsModule.forRoot(),
-    AlertModule.forRoot(),
+    ToastrModule.forRoot(),
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
     AngularEditorModule
   ],
-  declarations: [CompetencydetailComponent]
+  declarations: [EditCompetencyFrameworkComponent]
 })
-export class CompetencydetailModule { }
+export class EditCompetencyFrameworkModule { }
