@@ -17,6 +17,7 @@ import { AngularEditorConfig } from '@kolkov/angular-editor';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { TabDirective, TabsetComponent } from 'ngx-bootstrap/tabs';
 import { environment } from 'src/environments/environment';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-competencydetail',
@@ -33,7 +34,8 @@ export class CompetencydetailComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private http: HttpClient,
-    private elementRef: ElementRef
+    private elementRef: ElementRef,
+    private toastr: ToastrService,
   ) { }
   information: string;
   CompetencyNameList: Competencydetail[];
@@ -49,6 +51,7 @@ export class CompetencydetailComponent implements OnInit {
   EmployeeCompetencyID = 0;
   btnDraftDisabled = false;
   btnSaveDisabled = false;
+  btnCompeteDisabled = true;
   isOpen = false;
   divDisabled: false;
 
@@ -139,10 +142,16 @@ export class CompetencydetailComponent implements OnInit {
   bindEmployeeCompetency(competencyID: number) {
     this.employeeCompetencyService.findEmployeeCompetecyById(competencyID).subscribe((res: any) => {
       if (res){
+        if (res.isSave)
+      {
+        this.btnDraftDisabled = false;
+      }
+        if (res.isComplete)
+      {
+        this.btnSaveDisabled = false;
+      }
 
-
-      this.btnDraftDisabled = false;
-      this.employeeCompetencyForm.patchValue({
+        this.employeeCompetencyForm.patchValue({
           EmployeeCompetencyID: res.employeeCompetencyID,
           EmployeeCommnet: res.employeeCommnet,
           ReviewerComment: res.reviewerComment,
@@ -194,13 +203,13 @@ export class CompetencydetailComponent implements OnInit {
   ): FormData {
     const formData = new FormData();
     formData.append('EmployeeCommnet', employeeCompetencyData.EmployeeCommnet);
-    formData.append('ReviewerComment', employeeCompetencyData.ReviewerComment ?  null : '');
+    formData.append('ReviewerComment', employeeCompetencyData.ReviewerComment);
     formData.append('Files', this.fileData);
     formData.append('EmployeeID', '1');
     formData.append('IsSave', isSave);
     formData.append('IsDraft', isDraft);
     formData.append('IsComplete' , isComplete);
-    formData.append('EmployeeCompetencyID', employeeCompetencyData.EmployeeCompetencyID  ?  null : '0');
+    // formData.append('EmployeeCompetencyID', employeeCompetencyData.EmployeeCompetencyID  ?  null : '0');
     formData.append('CompetencyID', this.competencyID.toString());
     formData.append('ReviewID', '2');
     return formData;
@@ -220,8 +229,12 @@ export class CompetencydetailComponent implements OnInit {
       })
       .subscribe((res) => {
         this.btnDraftDisabled = false;
+        if (res.IsComplete)
+        {
+          this.btnCompeteDisabled = false;
+        }
         this.employeeCompetencyForm.patchValue({
-          EmployeeCompetencyID: res.EmployeeCompetencyID,
+          EmployeeCompetencyID: res.employeeCompetencyID,
           IsSave: res.isSave,
           IsDraft: res.isDraft,
           EmployeeID: res.employeeID,
@@ -230,6 +243,7 @@ export class CompetencydetailComponent implements OnInit {
           IsComplete: res.IsComplete
         });
 
+        this.bindEmployeeCompetency(res.competencyID);
         this.isOpen = true;
       });
     this.isUpload = false;
@@ -262,6 +276,7 @@ export class CompetencydetailComponent implements OnInit {
             IsComplete: res.IsComplete
           });
 
+          this.bindEmployeeCompetency(res.competencyID);
           this.isOpen = true;
         });
 
@@ -271,7 +286,7 @@ export class CompetencydetailComponent implements OnInit {
   }
 
   onSubmitReviewer(employeeCompetencyData): void {
-if (this.employeeCompetencyForm.get('EmployeeCompetencyID').value > 0 &&
+    if (this.employeeCompetencyForm.get('EmployeeCompetencyID').value > 0 &&
       this.employeeCompetencyForm.get('IsSave').value === true) {
       employeeCompetencyData.IsComplete = 'true';
       const formData = this.getFormData(employeeCompetencyData, 'false', 'false', 'true');
@@ -280,11 +295,11 @@ if (this.employeeCompetencyForm.get('EmployeeCompetencyID').value > 0 &&
         'Content-Disposition',
         'multipart/form-data',
       );
-      // const params = new HttpParams().set('id', employeeCompetencyData.EmployeeCompetencyID);
-      this.http.put<any>(`${this._apiEndpoint}/api/EmployeeCompetency`, formData, { headers })
+      const params = new HttpParams().set('id', employeeCompetencyData.EmployeeCompetencyID);
+      this.http.put<any>(`${this._apiEndpoint}/api/EmployeeCompetency`, formData, { headers, params })
         .subscribe((res) => {
-
-          alert('Employee data Updated successfully !!');
+          this.toastr.success('Record Updated Successfully');
+          this.bindEmployeeCompetency(res.competencyID);
         });
       this.isUpload = false;
       this.employeeCompetencyForm.reset();

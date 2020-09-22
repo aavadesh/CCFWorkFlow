@@ -123,12 +123,11 @@
                             </div>
                             <div class="card-footer">
                               <div class="float-left">
-                                <button type="button" (click)="
-                                    onDraft(employeeCompetencyForm.value)
-                                  " class="btn btn-default">
+                                <button type="button" (click)="onDraft(employeeCompetencyForm.value)" 
+                                class="btn btn-default" [disabled]="!btnDraftDisabled ? 'disabled': null">
                                   <i class="fas fa-pencil-alt"></i> Draft
                                 </button>
-                                <button type="submit" class="btn btn-success">
+                                <button type="submit" class="btn btn-success" [disabled]="!btnSaveDisabled ? 'disabled': null">
                                   <i class="far fa-envelope"></i> Submit
                                 </button>
                               </div>
@@ -158,11 +157,8 @@
                             </div>
                             <div class="card-footer">
                               <div class="float-right">
-                                <button type="button" (click)="
-                                    onSubmitReviewer(
-                                      employeeCompetencyForm.value
-                                    )
-                                  " class="btn btn-success">
+                                <button type="button" (click)="onSubmitReviewer(employeeCompetencyForm.value)"
+                                [disabled]="!btnCompeteDisabled ? 'disabled': null" class="btn btn-success">
                                   <i class="far fa-envelope"></i> Submit
                                 </button>
                               </div>
