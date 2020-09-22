@@ -1,5 +1,6 @@
 import { AfterViewInit, Component, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 import { MatSort } from '@angular/material/sort';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
@@ -20,13 +21,15 @@ export class CompetencyframeworkComponent implements AfterViewInit {
 
   constructor(
     private CrudService: CompetencyframeworkService,
-    private router: Router
+    private router: Router, private toastr: ToastrService,
   ) {}
 
+  // tslint:disable-next-line:use-lifecycle-interface
   ngOnInit(): void {
     this.bindCompetencyFramework();
   }
 
+  // tslint:disable-next-line:typedef
   bindCompetencyFramework() {
     this.CrudService.findAll().subscribe((res) => {
       this.dataSource = new MatTableDataSource();
@@ -36,9 +39,25 @@ export class CompetencyframeworkComponent implements AfterViewInit {
     });
   }
 
+  // tslint:disable-next-line:typedef
   applyFilter(filterValue: string) {
     this.dataSource.filter = filterValue.trim().toLowerCase();
   }
 
+  // tslint:disable-next-line:typedef
   ngAfterViewInit() {}
+
+  deleteClick(id): void {
+    this.CrudService.delete(id).subscribe((res) => {
+      this.toastr.success('Record Deleted Successfully');
+      this.bindCompetencyFramework();
+    });
+  }
+
+  editClick(id): void {
+    this.CrudService.delete(id).subscribe((res) => {
+      this.toastr.success('Record Deleted Successfully');
+      this.bindCompetencyFramework();
+    });
+  }
 }

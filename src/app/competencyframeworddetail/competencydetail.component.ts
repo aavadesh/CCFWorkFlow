@@ -24,6 +24,17 @@ import { environment } from 'src/environments/environment';
   styleUrls: ['./competencydetail.component.css'],
 })
 export class CompetencydetailComponent implements OnInit {
+
+  constructor(
+    private formBuilder: FormBuilder,
+    private competencyframeworkService: CompetencyframeworkService,
+    private competencyDetailService: CompetencydetailService,
+    private employeeCompetencyService: EmployeecompetencyService,
+    private route: ActivatedRoute,
+    private router: Router,
+    private http: HttpClient,
+    private elementRef: ElementRef
+  ) { }
   information: string;
   CompetencyNameList: Competencydetail[];
   employeecompetency: Employeecompetency;
@@ -39,97 +50,13 @@ export class CompetencydetailComponent implements OnInit {
   btnDraftDisabled = false;
   btnSaveDisabled = false;
   isOpen = false;
-  protected _apiEndpoint : string  = environment.apiEndpoint;
+  divDisabled: false;
+
+  // tslint:disable-next-line:variable-name
+  protected _apiEndpoint: string  = environment.apiEndpoint;
   @ViewChild(TabsetComponent) tabset: TabsetComponent;
 
   employeeCompetencyForm: FormGroup;
-
-  constructor(
-    private formBuilder: FormBuilder,
-    private competencyframeworkService: CompetencyframeworkService,
-    private competencyDetailService: CompetencydetailService,
-    private employeeCompetencyService: EmployeecompetencyService,
-    private route: ActivatedRoute,
-    private router: Router,
-    private http: HttpClient,
-    private elementRef: ElementRef
-  ) { }
-
-  ngOnInit(): void {
-    this.employeeCompetencyForm = this.formBuilder.group({
-      EmployeeCommnet: new FormControl(null),
-      Files: new FormControl(null),
-      IsSave: new FormControl(false),
-      IsDraft: new FormControl(false),
-      CompetencyID: new FormControl(null),
-      ReviewerComment: new FormControl(null),
-      ReviewID: new FormControl(null),
-      IsComplete: new FormControl(null),
-      EmployeeID: new FormControl(null),
-      EmployeeCompetencyID: new FormControl(null),
-    });
-
-    this.bindCompetencyNoteByID();
-    this.bindCompetencyNameByID();
-
-    this.btnDraftDisabled = true;
-    this.btnSaveDisabled = true;
-  }
-
-  bindCompetencyNoteByID() {
-    this.competencyframeworkService
-      .findOne(this.route.snapshot.params['id'])
-      .subscribe((res) => {
-        this.information = res.details;
-      });
-  }
-
-  bindCompetencyNameByID() {
-    this.competencyDetailService
-      .findById(this.route.snapshot.params['id'])
-      .subscribe((resp: Competencydetail[]) => {
-        debugger
-        this.CompetencyNameList = resp;
-        const activeTab = this.tabset.tabs.filter((tab) => tab.active);
-        let result = this.CompetencyNameList.find(
-          (x) => x.competencyName === activeTab[0].heading
-        );
-        this.competencyID = result.competencyID;
-        if (result != undefined) {
-          this.competencyInformation = (result.details as unknown) as string;
-        }
-
-        
-    this.bindEmployeeCompetency(this.competencyID);
-      });
-  }
-
-  bindEmployeeCompetency(competencyID: number) {
-    this.employeeCompetencyService.findEmployeeCompetecyById(competencyID).subscribe((res : any) => {
-      if(res){
-        
-      
-      this.btnDraftDisabled = false
-        this.employeeCompetencyForm.patchValue({
-          EmployeeCompetencyID: res.employeeCompetencyID,
-          EmployeeCommnet: res.employeeCommnet,
-          ReviewerComment: res.reviewerComment,
-          IsComplete: res.isComplete,
-          IsSave: res.isSave,
-          IsDraft: res.isDraft,
-          EmployeeID: res.employeeID,
-          ReviewID: res.reviewID,
-          CompetencyID: res.competencyID
-        });
-      }
-      });
-
-    this.competencyframeworkService
-      .findOne(this.route.snapshot.params['id'])
-      .subscribe((res) => {
-        this.information = res.details;
-      });
-  }
 
   config: AngularEditorConfig = {
     editable: true,
@@ -158,14 +85,95 @@ export class CompetencydetailComponent implements OnInit {
     ],
   };
 
+  ngOnInit(): void {
+    this.employeeCompetencyForm = this.formBuilder.group({
+      EmployeeCommnet: new FormControl(null),
+      Files: new FormControl(null),
+      IsSave: new FormControl(false),
+      IsDraft: new FormControl(false),
+      CompetencyID: new FormControl(null),
+      ReviewerComment: new FormControl(null),
+      ReviewID: new FormControl(null),
+      IsComplete: new FormControl(null),
+      EmployeeID: new FormControl(null),
+      EmployeeCompetencyID: new FormControl(null),
+    });
+
+    this.bindCompetencyNoteByID();
+    this.bindCompetencyNameByID();
+
+    this.btnDraftDisabled = true;
+    this.btnSaveDisabled = true;
+  }
+
+  // tslint:disable-next-line:typedef
+  bindCompetencyNoteByID() {
+    this.competencyframeworkService
+      .findOne(this.route.snapshot.params.id)
+      .subscribe((res) => {
+        this.information = res.details;
+      });
+  }
+
+  // tslint:disable-next-line:typedef
+  bindCompetencyNameByID() {
+    this.competencyDetailService
+      .findById(this.route.snapshot.params.id)
+      .subscribe((resp: Competencydetail[]) => {
+        this.CompetencyNameList = resp;
+        const activeTab = this.tabset.tabs.filter((tab) => tab.active);
+        const result = this.CompetencyNameList.find(
+          (x) => x.competencyName === activeTab[0].heading
+        );
+        this.competencyID = result.competencyID;
+        if (result !== undefined) {
+          this.competencyInformation = (result.details as unknown) as string;
+        }
+
+
+        this.bindEmployeeCompetency(this.competencyID);
+      });
+  }
+
+  // tslint:disable-next-line:typedef
+  bindEmployeeCompetency(competencyID: number) {
+    this.employeeCompetencyService.findEmployeeCompetecyById(competencyID).subscribe((res: any) => {
+      if (res){
+
+
+      this.btnDraftDisabled = false;
+      this.employeeCompetencyForm.patchValue({
+          EmployeeCompetencyID: res.employeeCompetencyID,
+          EmployeeCommnet: res.employeeCommnet,
+          ReviewerComment: res.reviewerComment,
+          IsComplete: res.isComplete,
+          IsSave: res.isSave,
+          IsDraft: res.isDraft,
+          EmployeeID: res.employeeID,
+          ReviewID: res.reviewID,
+          CompetencyID: res.competencyID
+        });
+      }
+      });
+
+    this.competencyframeworkService
+      .findOne(this.route.snapshot.params.id)
+      .subscribe((res) => {
+        this.information = res.details;
+      });
+  }
+
+  // tslint:disable-next-line:typedef
   fileProgress(fileInput: any) {
-    this.fileData = <File>fileInput.target.files[0];
+    this.fileData = (fileInput.target.files[0] as File);
     this.preview();
   }
 
+  // tslint:disable-next-line:typedef
   preview() {
     // Show preview
-    var mimeType = this.fileData.type;
+    // tslint:disable-next-line:prefer-const
+    let mimeType = this.fileData.type;
     this.fileName = this.fileData.name;
     this.fileSize = this.fileData.size;
     if (/word/i.exec(mimeType)) {
@@ -184,7 +192,6 @@ export class CompetencydetailComponent implements OnInit {
   getFormData(
     employeeCompetencyData, isSave, isDraft, isComplete
   ): FormData {
-    debugger
     const formData = new FormData();
     formData.append('EmployeeCommnet', employeeCompetencyData.EmployeeCommnet);
     formData.append('ReviewerComment', employeeCompetencyData.ReviewerComment ?  null : '');
@@ -192,7 +199,7 @@ export class CompetencydetailComponent implements OnInit {
     formData.append('EmployeeID', '1');
     formData.append('IsSave', isSave);
     formData.append('IsDraft', isDraft);
-    formData.append('IsComplete' ,isComplete);
+    formData.append('IsComplete' , isComplete);
     formData.append('EmployeeCompetencyID', employeeCompetencyData.EmployeeCompetencyID  ?  null : '0');
     formData.append('CompetencyID', this.competencyID.toString());
     formData.append('ReviewID', '2');
@@ -200,7 +207,7 @@ export class CompetencydetailComponent implements OnInit {
   }
 
   onSubmit(employeeCompetencyData): void {
-    employeeCompetencyData.IsSave= 'true';
+    employeeCompetencyData.IsSave = 'true';
     const formData = this.getFormData(employeeCompetencyData, 'true', 'false', 'false');
 
     const headers = new HttpHeaders().append(
@@ -209,7 +216,7 @@ export class CompetencydetailComponent implements OnInit {
     );
     this.http
       .post<any>(`${this._apiEndpoint}/api/EmployeeCompetency`, formData, {
-        headers: headers,
+        headers,
       })
       .subscribe((res) => {
         this.btnDraftDisabled = false;
@@ -230,7 +237,7 @@ export class CompetencydetailComponent implements OnInit {
   }
 
   onDraft(employeeCompetencyData): void {
-    if (this.EmployeeCompetencyID == 0) {
+    if (this.EmployeeCompetencyID === 0) {
       employeeCompetencyData.IsDraft = 'true';
       employeeCompetencyData.EmployeeCompetencyID = 0;
       const formData = this.getFormData(employeeCompetencyData, 'false', 'true', 'false');
@@ -242,7 +249,7 @@ export class CompetencydetailComponent implements OnInit {
 
       this.http
         .post<any>(`${this._apiEndpoint}/api/EmployeeCompetency`, formData, {
-          headers: headers,
+          headers,
         })
         .subscribe((res) => {
           this.employeeCompetencyForm.patchValue({
@@ -264,20 +271,19 @@ export class CompetencydetailComponent implements OnInit {
   }
 
   onSubmitReviewer(employeeCompetencyData): void {
-debugger
-    if (this.employeeCompetencyForm.get('EmployeeCompetencyID').value > 0 &&
-      this.employeeCompetencyForm.get('IsSave').value == true) {
+if (this.employeeCompetencyForm.get('EmployeeCompetencyID').value > 0 &&
+      this.employeeCompetencyForm.get('IsSave').value === true) {
       employeeCompetencyData.IsComplete = 'true';
-      const formData = this.getFormData(employeeCompetencyData, 'false','false', 'true');
+      const formData = this.getFormData(employeeCompetencyData, 'false', 'false', 'true');
 
       const headers = new HttpHeaders().append(
         'Content-Disposition',
         'multipart/form-data',
       );
-      //const params = new HttpParams().set('id', employeeCompetencyData.EmployeeCompetencyID);
-      this.http.put<any>(`${this._apiEndpoint}/api/EmployeeCompetency`, formData, { headers: headers })
+      // const params = new HttpParams().set('id', employeeCompetencyData.EmployeeCompetencyID);
+      this.http.put<any>(`${this._apiEndpoint}/api/EmployeeCompetency`, formData, { headers })
         .subscribe((res) => {
-          ;
+
           alert('Employee data Updated successfully !!');
         });
       this.isUpload = false;
@@ -286,11 +292,11 @@ debugger
   }
 
   onSelect(data: TabDirective): void {
-    let result = this.CompetencyNameList.find(
+    const result = this.CompetencyNameList.find(
       (x) => x.competencyName === data.heading
     );
     this.competencyID = result.competencyID;
-    if (result != undefined) {
+    if (result !== undefined) {
       this.competencyInformation = (result.details as unknown) as string;
     }
 
