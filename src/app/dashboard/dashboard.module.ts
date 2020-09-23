@@ -3,12 +3,13 @@ import { CommonModule } from '@angular/common';
 
 import { DashboardRoutingModule } from './dashboard-routing.module';
 import { DashboardComponent } from './dashboard.component';
+import { TruncatePipe } from '../shared/truncate.pipe';
 
 @NgModule({
   imports: [
     CommonModule,
     DashboardRoutingModule
   ],
-  declarations: [DashboardComponent]
+  declarations: [DashboardComponent, TruncatePipe]
 })
 export class DashboardModule { }
