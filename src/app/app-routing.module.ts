@@ -16,7 +16,7 @@ const routes: Routes = [
   { path: 'dashboard', loadChildren: './dashboard/dashboard.module#DashboardModule', canActivate: [AuthGuard] },
   { path: 'users', loadChildren: './users/users.module#UsersModule'},
   { path: 'competency-framework/add', loadChildren: './add-competency-framework/add-competency-framework.module#AddCompetencyFrameworkModule', canActivate: [AuthGuard]},
-  { path: 'competency-framework:id/edit', loadChildren: './edit-competency-framework/edit-competency-framework.module#EditCompetencyFrameworkModule', canActivate: [AuthGuard]},
+  { path: 'competency-framework/:id', loadChildren: './edit-competency-framework/edit-competency-framework.module#EditCompetencyFrameworkModule', canActivate: [AuthGuard]},
   // tslint:disable-next-line:max-line-length
   { path: 'competencyframework', loadChildren: './competencyframework/competencyframework.module#CompetencyframeworkModule', canActivate: [AuthGuard]},
   // tslint:disable-next-line:max-line-length

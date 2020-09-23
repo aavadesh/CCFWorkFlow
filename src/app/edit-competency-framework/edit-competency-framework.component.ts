@@ -43,6 +43,7 @@ export class EditCompetencyFrameworkComponent implements OnInit {
   // tslint:disable-next-line:typedef
   submit(){
     console.log(this.form.value);
+    debugger;
     this.competencyframeworkService.update(this.id, this.form.value).subscribe(res => {
       this.toastr.success('Record Updated Successfully');
       this.router.navigateByUrl('/competencyframework');
