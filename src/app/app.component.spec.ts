@@ -23,7 +23,7 @@ describe('AppComponent', () => {
   it(`should have as title 'CCFWorkFlow'`, () => {
     const fixture = TestBed.createComponent(AppComponent);
     const app = fixture.componentInstance;
-    expect(app.title).toEqual('CCFWorkFlow');
+    expect(app.showFooter).toEqual(true);
   });
 
   it('should render title', () => {
