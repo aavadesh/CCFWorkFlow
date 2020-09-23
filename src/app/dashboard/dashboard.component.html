@@ -25,23 +25,31 @@
       <div class="container-fluid">
         <div class="row">
             <div class="col-12">
-              <div class="card">
-                <div class="card-header">
-                  <h3 class="card-title">Dashboard</h3>
-  
-                  <div class="card-tools">
-                    <div class="input-group input-group-sm" style="width: 150px;">
-                      <input type="text" name="table_search" class="form-control float-right" placeholder="Search">
-  
-                      <div class="input-group-append">
-                        <button type="submit" class="btn btn-default"><i class="fas fa-search"></i></button>
-                      </div>
+                <div class="card card-default">
+                  <div class="card-header">
+                    <h3 class="card-title">
+                      <i class="fas fa-bullhorn"></i>
+                      {{frameworkName}}
+                    </h3>
+                  </div>
+                  <!-- /.card-header -->
+                  <div class="card-body" *ngFor="let emp of employeeCompetencyList">
+                    
+                    <div class="callout callout-success" *ngIf="emp.isComplete">
+                      <h3>{{emp.competencyName}}</h3>
+    
+                      <p [innerHTML]="emp.employeeCommnet"></p>
+                    </div>
+                    <div class="callout callout-info" *ngIf="emp.isDraft || emp.IsSave">
+                      <h3>{{emp.competencyName}}</h3>
+    
+                      <p [innerHTML]="emp.employeeCommnet"></p>
                     </div>
                   </div>
-                </div>
-                <!-- /.card-header -->
-                <!-- /.card-body -->
+                  <!-- /.card-body -->
+                <!-- /.card -->
               </div>
+              <!-- /.col -->
               <!-- /.card -->
             </div>
           </div>
