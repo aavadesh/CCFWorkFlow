@@ -25,7 +25,7 @@ export class AddCompetencyFrameworkComponent implements OnInit {
     this.form = new FormGroup({
       name: new FormControl('', [Validators.required]),
       details: new FormControl('', Validators.required),
-      isactive: new FormControl(false)
+      isActive: new FormControl(false)
     });
   }
 

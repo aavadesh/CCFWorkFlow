@@ -10,5 +10,10 @@ export class CompetencyframeworkService extends APIService<CompetencyFramework, 
   constructor(protected _http: HttpClient) {
     super(_http, "api/CompetencyFramework");
   }
+
+  // tslint:disable-next-line:typedef
+  edit(formValue) {
+    return this._http.put<CompetencyFramework>(this._apiEndpoint, formValue);
+}
 }
 

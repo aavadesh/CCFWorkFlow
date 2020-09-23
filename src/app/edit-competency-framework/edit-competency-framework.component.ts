@@ -23,15 +23,16 @@ export class EditCompetencyFrameworkComponent implements OnInit {
                private router: Router) { }
 
   ngOnInit(): void {
-    debugger
     this.id = this.route.snapshot.params.id;
     this.competencyframeworkService.findOne(this.id).subscribe((data: CompetencyFramework) => {
+      debugger
       this.cf = data;
     });
     this.form = new FormGroup({
       name: new FormControl('', [Validators.required]),
       details: new FormControl('', Validators.required),
-      isactive: new FormControl(false)
+      isActive: new FormControl(false),
+      competencyFrameworkID: new FormControl(false)
     });
   }
 
@@ -43,8 +44,7 @@ export class EditCompetencyFrameworkComponent implements OnInit {
   // tslint:disable-next-line:typedef
   submit(){
     console.log(this.form.value);
-    debugger;
-    this.competencyframeworkService.update(this.id, this.form.value).subscribe(res => {
+    this.competencyframeworkService.edit(this.form.value).subscribe(res => {
       this.toastr.success('Record Updated Successfully');
       this.router.navigateByUrl('/competencyframework');
     });
