@@ -18,8 +18,10 @@ export class EmployeecompetencyService extends APIService<
   // findEmployeeCompetecyById(id: number): Observable<any[]> {
   //   return this._http.get<any>(this._apiEndpoint + "/" + id);
   // }
+  // tslint:disable-next-line:typedef
   edit(emp: FormData) {
-    var empID = emp.get('EmployeeCompetencyID');
+    // tslint:disable-next-line:prefer-const
+    let empID = emp.get('EmployeeCompetencyID');
     const params = new HttpParams().set('Id', empID.toString());
     const headers = new HttpHeaders().set('content-type', 'application/json');
     return this._http.put<Employeecompetency>(
@@ -30,7 +32,9 @@ export class EmployeecompetencyService extends APIService<
   }
 
   findEmployeeCompetecyById(id: number): Observable<Employeecompetency> {
-    return this._http.get<Employeecompetency>(this._apiEndpoint + '/' + id + '/' + 1)
+    return this._http.get<Employeecompetency>(this._apiEndpoint + '/' + id + '/' + 1);
   }
-  
+  findEmployeeId(id: number): Observable<Employeecompetency[]> {
+      return this._http.get<Employeecompetency[]>(this._apiEndpoint + '/GetEmployeeCompetency' + '/' + id);
+    }
 }

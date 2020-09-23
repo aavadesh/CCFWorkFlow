@@ -11,4 +11,7 @@ export class Employeecompetency {
   EmployeeID: number;
   IsSave: boolean;
   IsDraft: boolean;
+  FrameworkName: string;
+  CompetencyName: string;
+  CompetencyFrameworkID: number;
 }
