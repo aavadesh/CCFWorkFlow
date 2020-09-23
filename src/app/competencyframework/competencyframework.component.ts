@@ -7,6 +7,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { CompetencyFramework } from './class/competencyframewokr';
 import { CompetencyframeworkService } from '../services/competencyframework.service';
 import { from, Observable, Subscription } from 'rxjs';
+import { EmployeecompetencyService } from '../services/employeecompetency.service';
 
 @Component({
   selector: 'app-competencyframework',
@@ -21,6 +22,7 @@ export class CompetencyframeworkComponent implements AfterViewInit {
 
   constructor(
     private CrudService: CompetencyframeworkService,
+    private employeecompetencyService: EmployeecompetencyService,
     private router: Router, private toastr: ToastrService,
   ) {}
 
@@ -51,6 +53,19 @@ export class CompetencyframeworkComponent implements AfterViewInit {
     this.CrudService.delete(id).subscribe((res) => {
       this.toastr.success('Record Deleted Successfully');
       this.bindCompetencyFramework();
+    });
+  }
+
+  applyClick(id): void {
+    this.employeecompetencyService.findEmployee(1).subscribe((res) => {
+      if (res != null)
+      {
+        this.toastr.error('You have been started to fill one of competency!');
+      }
+      else
+      {
+        this.router.navigate(['/competencydetail', id]);
+      }
     });
   }
 

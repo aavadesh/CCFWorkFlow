@@ -150,7 +150,6 @@ export class CompetencydetailComponent implements OnInit {
       {
         this.btnSaveDisabled = false;
       }
-
         this.employeeCompetencyForm.patchValue({
           EmployeeCompetencyID: res.employeeCompetencyID,
           EmployeeCommnet: res.employeeCommnet,
@@ -242,7 +241,7 @@ export class CompetencydetailComponent implements OnInit {
           CompetencyID: res.employeeID,
           IsComplete: res.IsComplete
         });
-
+        this.toastr.success('Record Added Successfully');
         this.bindEmployeeCompetency(res.competencyID);
         this.isOpen = true;
       });
@@ -275,7 +274,7 @@ export class CompetencydetailComponent implements OnInit {
             CompetencyID: res.employeeID,
             IsComplete: res.IsComplete
           });
-
+          this.toastr.success('Record Added Successfully');
           this.bindEmployeeCompetency(res.competencyID);
           this.isOpen = true;
         });

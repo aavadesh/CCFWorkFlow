@@ -60,7 +60,7 @@
                       <!-- <a (click)="apply(element)"><i class="fas fa-folder"></i>Apply</a>   -->
 
                       <a class="btn btn-primary btn-sm"  style="margin:2px;"
-                      [routerLink]="['/competencydetail',element.competencyFrameworkID]">
+                      (click)="applyClick(element.competencyFrameworkID)">
                         <i class="fas fa-folder"> </i>
                         Apply
                       </a>

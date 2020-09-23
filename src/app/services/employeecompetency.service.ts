@@ -37,4 +37,8 @@ export class EmployeecompetencyService extends APIService<
   findEmployeeId(id: number): Observable<Employeecompetency[]> {
       return this._http.get<Employeecompetency[]>(this._apiEndpoint + '/GetEmployeeCompetency' + '/' + id);
     }
+
+    findEmployee(id: number): Observable<Employeecompetency> {
+      return this._http.get<Employeecompetency>(this._apiEndpoint + '/FindEmployee' + '/' + id);
+    }
 }
