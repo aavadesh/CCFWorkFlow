@@ -36,15 +36,23 @@
                   <div class="card-body" *ngFor="let emp of employeeCompetencyList">
                     
                     <div class="callout callout-success" *ngIf="emp.isComplete">
-                      <h3>{{emp.competencyName}}</h3>
-    
-                      <p [innerHTML]="emp.employeeCommnet"></p>
+                     <a [routerLink]="['/competencydetail',emp.competencyFrameworkID]" href="#" style="cursor: hand;"> <h2>{{emp.competencyName}} 
+                       <small class="badge badge-primary"> Completed</small></h2>  
+                      </a>
+                      <h4><b>Employee Comment</b></h4>
+                      <p [innerHTML]="emp.employeeCommnet | truncate:[150, '...']"></p>
+                      <hr>
+                      <h4><b>Line Manager Comment</b></h4>
+                      <p [innerHTML]="emp.reviewerComment | truncate:[150, '...']"></p>
                     </div>
                     <div class="callout callout-info" *ngIf="emp.isDraft || emp.IsSave">
-                      <h3>{{emp.competencyName}}</h3>
-    
-                      <p [innerHTML]="emp.employeeCommnet"></p>
-                    </div>
+                      <a [routerLink]="['/competencydetail',emp.competencyFrameworkID]" href="#" style="cursor: hand;">
+                      <h2>{{emp.competencyName}} <small class="badge badge-primary"> In Progress</small></h2></a>
+                      <h4><b>Employee Comment</b></h4>
+                      <p [innerHTML]="emp.employeeCommnet | truncate:[150, '...'] "></p>
+                      <hr>
+                      <h4><b>Line Manager Comment</b></h4>
+                      <p [innerHTML]="emp.reviewerComment | truncate:[150, '...'] "></p>                    </div>
                   </div>
                   <!-- /.card-body -->
                 <!-- /.card -->
